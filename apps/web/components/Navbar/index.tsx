@@ -28,12 +28,10 @@ const Navbar = () => {
     router.push("/");
   };
 
-  // Update user state on mount and route changes
   useEffect(() => {
     setUser(authService.getUser());
   }, [router.pathname]);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
