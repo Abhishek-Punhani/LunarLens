@@ -1,0 +1,214 @@
+import axios from "axios";
+const AUTH_SERVER =
+  process.env.NEXT_PUBLIC_AUTH_SERVER || "http://localhost:4000";
+export const authService = {
+  async login(email: string, password: string) {
+    try {
+      const response = await axios.post(
+        `${AUTH_SERVER}/api/auth/login`,
+        { email, password },
+        { withCredentials: true }
+      );
+      const result = response.data;
+
+      // Store auth data
+      if (typeof window !== "undefined" && result.accessToken) {
+        localStorage.setItem("access_token", result.accessToken);
+        localStorage.setItem("user", JSON.stringify(result.user));
+      }
+
+      return result;
+    } catch (error: any) {
+      throw new Error(error?.response?.data || "Login failed");
+    }
+  },
+
+  async register(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    photoUrl?: string
+  ) {
+    try {
+      const response = await axios.post(
+        `${AUTH_SERVER}/api/auth/register`,
+        {
+          firstName,
+          lastName,
+          email,
+          password,
+          photo: photoUrl,
+        },
+        { withCredentials: true }
+      );
+      const result = response.data;
+
+      // Store auth data
+      if (typeof window !== "undefined" && result.accessToken) {
+        localStorage.setItem("access_token", result.accessToken);
+        localStorage.setItem("user", JSON.stringify(result.user));
+      }
+
+      return result;
+    } catch (error: any) {
+      throw new Error(error?.response?.data || "Registration failed");
+    }
+  },
+
+  async logout() {
+    try {
+      await axios.post(
+        `${AUTH_SERVER}/api/auth/logout`,
+        {},
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${this.getToken()}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+
+    // Clear stored data
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("access_token");
+      localStorage.removeItem("user");
+    }
+  },
+
+  async validateToken(token: string) {
+    const response = await axios.get(`${AUTH_SERVER}/api/auth/validate`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  },
+
+  async refreshToken() {
+    try {
+      const response = await axios.post(
+        `${AUTH_SERVER}/api/auth/refresh-token`,
+        {},
+        {
+          withCredentials: true,
+          timeout: 10000, // 10 second timeout
+        }
+      );
+
+      const result = response.data;
+
+      if (!result || !result.accessToken) {
+        console.error("❌ Invalid refresh response:", result);
+        throw new Error("No access token in refresh response");
+      }
+
+      // Store new token
+      if (typeof window !== "undefined") {
+        localStorage.setItem("access_token", result.accessToken);
+      }
+
+      return result;
+    } catch (error: any) {
+      console.error(
+        "❌ Refresh token error:",
+        error?.response?.data || error?.message
+      );
+
+      // Re-throw with proper error structure
+      if (error?.response?.data) {
+        throw error;
+      }
+      throw new Error("Token refresh failed");
+    }
+  },
+
+  getToken(): string | null {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("access_token");
+    }
+    return null;
+  },
+
+  getUser() {
+    if (typeof window !== "undefined") {
+      const userStr = localStorage.getItem("user");
+      if (userStr) {
+        try {
+          return JSON.parse(userStr);
+        } catch (error) {
+          console.error("Failed to parse user from localStorage:", error);
+        }
+      }
+    }
+    return null;
+  },
+
+  isAuthenticated(): boolean {
+    return !!this.getToken();
+  },
+
+  async googleLogin(credentialResponse: { credential: string }) {
+    try {
+      const response = await axios.post(
+        `${AUTH_SERVER}/api/auth/google-login`,
+        { credential: credentialResponse.credential },
+        { withCredentials: true }
+      );
+      const result = response.data;
+
+      if (typeof window !== "undefined" && result.accessToken) {
+        localStorage.setItem("access_token", result.accessToken);
+        localStorage.setItem("user", JSON.stringify(result.user));
+      }
+
+      return {
+        isNewUser: result.isNewUser || !result.user?.isEmailVerified,
+        user: result.user,
+      };
+    } catch (error: any) {
+      const message =
+        error?.response?.data ||
+        (error instanceof Error
+          ? error.message
+          : typeof error === "string"
+            ? error
+            : "Google Login failed, Please try again");
+      throw new Error(message);
+    }
+  },
+
+  async updateProfile(data: {
+    firstName?: string;
+    lastName?: string;
+    photo?: string;
+  }) {
+    try {
+      const response = await axios.post(
+        `${AUTH_SERVER}/api/auth/user/update`,
+        data,
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${this.getToken()}`,
+          },
+        }
+      );
+      const result = response.data;
+
+      // Update localStorage with the new user object from backend
+      if (result?.user && typeof window !== "undefined") {
+        localStorage.setItem("user", JSON.stringify(result.user));
+      }
+
+      return result.user;
+    } catch (error: any) {
+      throw new Error(
+        error?.response?.data?.message || "Profile update failed"
+      );
+    }
+  },
+};
