@@ -1,0 +1,107 @@
+version: "3.8"
+
+services:
+  # Redis for Queue Management
+  redis:
+    image: redis:7-alpine
+    container_name: lunarlens-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --save "" --appendonly no
+    networks:
+      - lunarlens-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  # Auth Server
+  auth-server:
+    build:
+      context: .
+      dockerfile: apps/auth_server/Dockerfile
+      target: development
+    container_name: lunarlens-auth
+    restart: unless-stopped
+    ports:
+      - "4000:4000"
+    env_file:
+      - .env
+      - apps/auth_server/.env
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - lunarlens-network
+    volumes:
+      - ./apps/auth_server:/app/apps/auth_server
+      - ./shared:/app/shared
+      - ./types:/app/types
+      - ./middleware:/app/middleware
+      - ./tsconfig.json:/app/tsconfig.json
+      - /app/node_modules
+      - /app/apps/auth_server/node_modules
+
+  # Calc Server
+  calc-server:
+    build:
+      context: .
+      dockerfile: apps/calc_server/dev.Dockerfile
+    container_name: lunarlens-calc
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+      - apps/calc_server/.env
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+    networks:
+      - lunarlens-network
+    volumes:
+      - ./apps/calc_server:/app/apps/calc_server
+
+  # Web Frontend (Next.js)
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+      target: development
+    container_name: lunarlens-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: ${NODE_ENV:-development}
+      NEXT_PUBLIC_AUTH_SERVER: http://localhost:4000
+      NEXT_PUBLIC_MARKET_SERVER: http://localhost:5000
+      NEXT_PUBLIC_CALC_SERVER: http://localhost:8000
+      NEXT_PUBLIC_API_SERVER: http://localhost:3004
+      NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+    depends_on:
+      - auth-server
+      - calc-server
+    networks:
+      - lunarlens-network
+    volumes:
+      - ./apps/web:/app/apps/web
+      - ./shared:/app/shared
+      - ./types:/app/types
+      - /app/node_modules
+      - /app/apps/web/node_modules
+      - /app/apps/web/.next
+
+networks:
+  lunarlens-network:
+    driver: bridge
+
+volumes:
+  redis_data:
+    driver: local

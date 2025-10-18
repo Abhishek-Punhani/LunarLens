@@ -40,7 +40,7 @@ const LoginPage = () => {
     setIsLoading(true);
 
     try {
-      // Try to authenticate with BullReckon auth server
+      // Try to authenticate with LunarLens auth server
       const result = await authService.login(email, password);
 
       if (result.status === "success") {
@@ -102,10 +102,14 @@ const LoginPage = () => {
         <CardContent className="px-8 pb-8">
           {showForgot ? (
             <div className="space-y-6">
-              <h2 className="text-2xl font-semibold mb-4 text-center">Forgot Password</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-center">
+                Forgot Password
+              </h2>
               <form onSubmit={handleForgotPassword} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="forgotEmail" className="text-slate-200">Email</Label>
+                  <Label htmlFor="forgotEmail" className="text-slate-200">
+                    Email
+                  </Label>
                   <div className="relative">
                     <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
                     <Input
@@ -139,7 +143,9 @@ const LoginPage = () => {
           ) : (
             <form onSubmit={handleLogin} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="email" className="text-slate-200">Email</Label>
+                <Label htmlFor="email" className="text-slate-200">
+                  Email
+                </Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
                   <Input
@@ -155,7 +161,9 @@ const LoginPage = () => {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-slate-200">Password</Label>
+                <Label htmlFor="password" className="text-slate-200">
+                  Password
+                </Label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
                   <Input
@@ -170,7 +178,11 @@ const LoginPage = () => {
                 </div>
               </div>
 
-              <Button type="submit" className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg transition-colors" disabled={isLoading}>
+              <Button
+                type="submit"
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 rounded-lg transition-colors"
+                disabled={isLoading}
+              >
                 {isLoading ? "Signing in..." : "Sign In"}
               </Button>
               <Button

@@ -9,7 +9,7 @@ export const welcomeEmail = (userName: string) => {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Welcome to BullReckon</title>
+  <title>Welcome to LunarLens</title>
   <style>
     body {
       margin: 0;
@@ -26,7 +26,7 @@ export const welcomeEmail = (userName: string) => {
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
     .header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
       padding: 40px 20px;
       text-align: center;
       color: #ffffff;
@@ -62,7 +62,7 @@ export const welcomeEmail = (userName: string) => {
       margin-bottom: 15px;
     }
     .feature-icon {
-      background-color: #667eea;
+      background-color: #3b82f6;
       color: #ffffff;
       width: 32px;
       height: 32px;
@@ -81,7 +81,7 @@ export const welcomeEmail = (userName: string) => {
     }
     .button {
       display: inline-block;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
       color: #ffffff;
       text-decoration: none;
       padding: 14px 32px;
@@ -103,7 +103,7 @@ export const welcomeEmail = (userName: string) => {
     .social-link {
       display: inline-block;
       margin: 0 10px;
-      color: #667eea;
+      color: #3b82f6;
       text-decoration: none;
     }
   </style>
@@ -111,44 +111,44 @@ export const welcomeEmail = (userName: string) => {
 <body>
   <div class="container">
     <div class="header">
-      <h1>🎉 Welcome to BullReckon!</h1>
+      <h1>🚀 Welcome to LunarLens!</h1>
     </div>
     
     <div class="content">
       <div class="greeting">Hi ${userName}!</div>
       
       <div class="message">
-        <p>Thank you for joining BullReckon! Your account is now active and ready to go.</p>
-        <p>We're excited to have you on board. BullReckon is your all-in-one platform for algorithmic trading, portfolio management, and market analysis.</p>
+        <p>Thank you for joining LunarLens! Your account is now active and ready to explore lunar XRF data.</p>
+        <p>We're excited to have you on board. LunarLens is your comprehensive platform for analyzing lunar X-ray Fluorescence (XRF) spectroscopy data from the Chandrayaan-2 CLASS instrument.</p>
       </div>
 
       <div class="features">
         <div class="feature-item">
+          <div class="feature-icon">🌙</div>
+          <div class="feature-text">
+            <strong>3D Lunar Globe Visualization</strong><br>
+            Interactive 3D globe showing data collection points and lunar surface features
+          </div>
+        </div>
+        <div class="feature-item">
           <div class="feature-icon">📊</div>
           <div class="feature-text">
-            <strong>Real-time Market Data</strong><br>
-            Access live prices and market analytics for stocks and crypto
+            <strong>Spectral Analysis</strong><br>
+            Automated peak detection, element identification, and flux calculations
           </div>
         </div>
         <div class="feature-item">
-          <div class="feature-icon">🤖</div>
+          <div class="feature-icon">🔬</div>
           <div class="feature-text">
-            <strong>Algorithmic Trading</strong><br>
-            Connect your trading strategies via API and automate your trades
-          </div>
-        </div>
-        <div class="feature-item">
-          <div class="feature-icon">💼</div>
-          <div class="feature-text">
-            <strong>Portfolio Management</strong><br>
-            Track your investments and monitor performance in real-time
+            <strong>XRF Data Processing</strong><br>
+            Process FITS files from Chandrayaan-2 CLASS instrument with advanced algorithms
           </div>
         </div>
         <div class="feature-item">
           <div class="feature-icon">📈</div>
           <div class="feature-text">
-            <strong>Advanced Analytics</strong><br>
-            Get insights with charts, backtesting, and risk management tools
+            <strong>Elemental Composition Mapping</strong><br>
+            Generate detailed maps of lunar surface elemental composition and ratios
           </div>
         </div>
       </div>
@@ -175,9 +175,9 @@ export const welcomeEmail = (userName: string) => {
         <a href="#" class="social-link">Discord</a>
         <a href="#" class="social-link">GitHub</a>
       </div>
-      <p>© ${new Date().getFullYear()} BullReckon. All rights reserved.</p>
+      <p>© ${new Date().getFullYear()} LunarLens. All rights reserved.</p>
       <p style="font-size: 12px; margin-top: 10px;">
-        You're receiving this email because you signed up for BullReckon.
+        You're receiving this email because you signed up for LunarLens.
       </p>
     </div>
   </div>

@@ -112,6 +112,9 @@ a[x-apple-data-detectors],
                        </table></td>
                      </tr>
                      <tr>
+                      <td align="center" style="padding:0;Margin:0;font-size:0px"><h1 style="Margin:0;font-family:Montserrat, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:36px;font-style:normal;font-weight:bold;line-height:43.2px;color:#1e40af;background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">LunarLens</h1></td>
+                     </tr>
+                     <tr>
                       <td align="center" style="padding:0;Margin:0;padding-bottom:10px;padding-top:10px;font-size:0">
                        <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                          <tr>
@@ -140,7 +143,7 @@ a[x-apple-data-detectors],
                       <td align="center" style="padding:0;Margin:0;font-size:0px"><img src="https://ftkwhgb.stripocdn.email/content/guids/CABINET_2663efe83689b9bda1312f85374f56d2/images/10381620386430630.png" alt="" width="100" style="display:block;font-size:16px;border:0;outline:none;text-decoration:none"></td>
                      </tr>
                      <tr>
-                      <td align="center" style="padding:0;Margin:0"><h2 style="Margin:0;font-family:Montserrat, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:36px;font-style:normal;font-weight:normal;line-height:43.2px;color:#333333">Verify your email to finish signing up</h2></td>
+                      <td align="center" style="padding:0;Margin:0"><h2 style="Margin:0;font-family:Montserrat, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:36px;font-style:normal;font-weight:normal;line-height:43.2px;color:#333333">Verify your email to start exploring lunar XRF data</h2></td>
                      </tr>
                      <tr>
                       <td align="center" class="es-m-txt-c" style="padding:0;Margin:0;padding-bottom:10px;padding-top:10px;font-size:0">
@@ -151,7 +154,7 @@ a[x-apple-data-detectors],
                        </table></td>
                      </tr>
                      <tr>
-                      <td align="center" class="es-m-p0r" style="padding:0;Margin:0;padding-top:5px;padding-right:40px;padding-bottom:5px"><p style="Margin:0;mso-line-height-rule:exactly;font-family:Montserrat, sans-serif;line-height:24px;letter-spacing:0;color:#333333;font-size:16px">Thank you for choosing BullReckon.</p><p style="Margin:0;mso-line-height-rule:exactly;font-family:Montserrat, sans-serif;line-height:24px;letter-spacing:0;color:#333333;font-size:16px"><br></p><p style="Margin:0;mso-line-height-rule:exactly;font-family:Montserrat, sans-serif;line-height:24px;letter-spacing:0;color:#333333;font-size:16px">Please confirm that <strong>${to}</strong> is your email address by clicking on the button below or use this link <a href="${url}"><strong>${url}</strong></a> within <strong>48 hours</strong>.</p></td>
+                      <td align="center" class="es-m-p0r" style="padding:0;Margin:0;padding-top:5px;padding-right:40px;padding-bottom:5px"><p style="Margin:0;mso-line-height-rule:exactly;font-family:Montserrat, sans-serif;line-height:24px;letter-spacing:0;color:#333333;font-size:16px">Thank you for joining LunarLens - your gateway to lunar surface analysis.</p><p style="Margin:0;mso-line-height-rule:exactly;font-family:Montserrat, sans-serif;line-height:24px;letter-spacing:0;color:#333333;font-size:16px"><br></p><p style="Margin:0;mso-line-height-rule:exactly;font-family:Montserrat, sans-serif;line-height:24px;letter-spacing:0;color:#333333;font-size:16px">Please confirm that <strong>${to}</strong> is your email address by clicking on the button below or use this link <a href="${url}"><strong>${url}</strong></a> within <strong>48 hours</strong>.</p></td>
                      </tr>
                      <tr>
                       <td align="center" class="es-m-txt-c" style="padding:0;Margin:0;padding-bottom:10px;padding-top:10px;font-size:0">
@@ -162,7 +165,7 @@ a[x-apple-data-detectors],
                        </table></td>
                      </tr>
                      <tr>
-                      <td align="center" class="es-m-txt-l" style="padding:0;Margin:0;padding-bottom:10px;padding-top:10px"><span class="es-button-border" style="border-style:solid;border-color:#999999;background:#ffffff;border-width:1px;display:inline-block;border-radius:0px;width:auto"><a href="${url}" target="_blank" class="es-button" style="mso-style-priority:100 !important;text-decoration:none !important;mso-line-height-rule:exactly;color:#666666;font-size:16px;padding:10px 30px 10px 30px;display:inline-block;background:#ffffff;border-radius:0px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;line-height:19.2px;width:auto;text-align:center;letter-spacing:0;mso-padding-alt:0;mso-border-alt:10px solid #FEF3E6;border-color:#ffffff">Verify my email</a></span></td>
+                      <td align="center" class="es-m-txt-l" style="padding:0;Margin:0;padding-bottom:10px;padding-top:10px"><span class="es-button-border" style="border-style:solid;border-color:#3b82f6;background:#3b82f6;border-width:1px;display:inline-block;border-radius:6px;width:auto"><a href="${url}" target="_blank" class="es-button" style="mso-style-priority:100 !important;text-decoration:none !important;mso-line-height-rule:exactly;color:#ffffff;font-size:16px;padding:10px 30px 10px 30px;display:inline-block;background:#3b82f6;border-radius:6px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;line-height:19.2px;width:auto;text-align:center;letter-spacing:0;mso-padding-alt:0;mso-border-alt:10px solid #3b82f6;border-color:#3b82f6">Verify my email</a></span></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -206,7 +209,7 @@ a[x-apple-data-detectors],
                       <td align="center" style="padding:0;Margin:0;padding-top:10px;padding-bottom:5px"><h3 class="es-m-txt-l" style="Margin:0;font-family:Montserrat, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:20px;font-style:normal;font-weight:normal;line-height:24px;color:#333333">Ask at</h3></td>
                      </tr>
                      <tr>
-                      <td align="left" class="es-m-txt-l" style="padding:0;Margin:0;padding-bottom:10px;padding-top:10px"><span class="es-button-border" style="border-style:solid;border-color:#999999;background:#ffffff;border-width:1px;display:block;border-radius:0px;width:auto"><a href="" target="_blank" class="es-button" style="mso-style-priority:100 !important;text-decoration:none !important;mso-line-height-rule:exactly;color:#666666;font-size:16px;padding:10px 30px 10px 30px;display:block;background:#ffffff;border-radius:0px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;line-height:19.2px;width:auto;text-align:center;letter-spacing:0;mso-padding-alt:0;mso-border-alt:10px solid #FEF3E6;border-color:#ffffff;border-left-width:30px;border-right-width:30px">help@bullReckon.com</a></span></td>
+                      <td align="left" class="es-m-txt-l" style="padding:0;Margin:0;padding-bottom:10px;padding-top:10px"><span class="es-button-border" style="border-style:solid;border-color:#999999;background:#ffffff;border-width:1px;display:block;border-radius:0px;width:auto"><a href="" target="_blank" class="es-button" style="mso-style-priority:100 !important;text-decoration:none !important;mso-line-height-rule:exactly;color:#666666;font-size:16px;padding:10px 30px 10px 30px;display:block;background:#ffffff;border-radius:0px;font-family:Montserrat, sans-serif;font-weight:normal;font-style:normal;line-height:19.2px;width:auto;text-align:center;letter-spacing:0;mso-padding-alt:0;mso-border-alt:10px solid #FEF3E6;border-color:#ffffff;border-left-width:30px;border-right-width:30px">help@lunarlens.com</a></span></td>
                      </tr>
                    </table></td>
                  </tr>

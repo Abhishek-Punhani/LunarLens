@@ -1,0 +1,159 @@
+version: "3.8"
+services:
+  # WEB
+  web1:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+    ports:
+      - "3001:3001"
+    env_file:
+      - .env
+      - apps/web/.env
+  web2:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    environment:
+      - NODE_ENV=production
+      - PORT=3002
+    ports:
+      - "3002:3002"
+    env_file:
+      - .env
+      - apps/web/.env
+  web3:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    environment:
+      - NODE_ENV=production
+      - PORT=3003
+    ports:
+      - "3003:3003"
+    env_file:
+      - .env
+      - apps/web/.env
+  web-nginx:
+    image: nginx:alpine
+    volumes:
+      - ./apps/web/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "3000:3000"
+    depends_on:
+      - web1
+      - web2
+      - web3
+
+  # AUTH SERVER
+  auth1:
+    build:
+      context: .
+      dockerfile: apps/auth_server/Dockerfile
+    environment:
+      - NODE_ENV=production
+      - PORT=4001
+    ports:
+      - "4001:4001"
+    env_file:
+      - .env
+      - apps/auth_server/.env
+  auth2:
+    build:
+      context: .
+      dockerfile: apps/auth_server/Dockerfile
+    environment:
+      - NODE_ENV=production
+      - PORT=4002
+    ports:
+      - "4002:4002"
+    env_file:
+      - .env
+      - apps/auth_server/.env
+  auth3:
+    build:
+      context: .
+      dockerfile: apps/auth_server/Dockerfile
+    environment:
+      - NODE_ENV=production
+      - PORT=4003
+    ports:
+      - "4003:4003"
+    env_file:
+      - .env
+      - apps/auth_server/.env
+  auth-nginx:
+    image: nginx:alpine
+    volumes:
+      - ./apps/auth_server/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "4000:4000"
+    depends_on:
+      - auth1
+      - auth2
+      - auth3
+
+  # CALC SERVER
+  calc1:
+    build:
+      context: .
+      dockerfile: apps/calc_server/Dockerfile
+    environment:
+      - NODE_ENV=production
+      - PORT=8001
+    ports:
+      - "8001:8001"
+    env_file:
+      - .env
+      - apps/calc_server/.env
+  calc2:
+    build:
+      context: .
+      dockerfile: apps/calc_server/Dockerfile
+    environment:
+      - NODE_ENV=production
+      - PORT=8002
+    ports:
+      - "8002:8002"
+    env_file:
+      - .env
+      - apps/calc_server/.env
+  calc3:
+    build:
+      context: .
+      dockerfile: apps/calc_server/Dockerfile
+    environment:
+      - NODE_ENV=production
+      - PORT=8003
+    ports:
+      - "8003:8003"
+    env_file:
+      - .env
+      - apps/calc_server/.env
+  calc-nginx:
+    image: nginx:alpine
+    volumes:
+      - ./apps/calc_server/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8000:8000"
+    depends_on:
+      - calc1
+      - calc2
+      - calc3
+
+  # REDIS
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+    command: ["redis-server", "--save", "60", "1", "--loglevel", "warning"]
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:
+    driver: local

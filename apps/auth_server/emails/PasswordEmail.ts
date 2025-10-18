@@ -1,23 +1,19 @@
-export type PasswordEmailType = 'forgot' | 'reset';
+export type PasswordEmailType = "forgot" | "reset";
 
-export const passwordEmail = (type: PasswordEmailType) => (
-    to: string,
-    url: string
-) => {
+export const passwordEmail =
+  (type: PasswordEmailType) => (to: string, url: string) => {
     const subject =
-        type === 'forgot'
-            ? 'Reset your BullReckon password'
-            : 'Your BullReckon password has been changed';
+      type === "forgot"
+        ? "Reset your LunarLens password"
+        : "Your LunarLens password has been changed";
 
     const actionText =
-        type === 'forgot'
-            ? 'Reset my password'
-            : 'Go to BullReckon';
+      type === "forgot" ? "Reset my password" : "Go to LunarLens";
 
     const description =
-        type === 'forgot'
-            ? `We received a request to reset the password for your BullReckon account (${to}). Click the button below or use this link <a href="${url}"><strong>${url}</strong></a> to reset your password. This link will expire in <strong>48 hours</strong>.`
-            : `Your password for BullReckon account (${to}) has been successfully changed. If you did not perform this action, please contact our support immediately.`;
+      type === "forgot"
+        ? `We received a request to reset the password for your LunarLens account (${to}). Click the button below or use this link <a href="${url}"><strong>${url}</strong></a> to reset your password. This link will expire in <strong>48 hours</strong>.`
+        : `Your password for LunarLens account (${to}) has been successfully changed. If you did not perform this action, please contact our support immediately.`;
 
     return `
         <!DOCTYPE html>
@@ -30,13 +26,13 @@ export const passwordEmail = (type: PasswordEmailType) => (
             <style>
                 body { font-family: Montserrat, sans-serif; background: #fff; margin: 0; padding: 0; }
                 .container { max-width: 600px; margin: 0 auto; background: #fff; padding: 40px 20px; }
-                .btn { display: inline-block; padding: 12px 32px; background: #134F5C; color: #fff; text-decoration: none; border-radius: 4px; font-size: 16px; margin-top: 24px; }
+                .btn { display: inline-block; padding: 12px 32px; background: #3b82f6; color: #fff; text-decoration: none; border-radius: 6px; font-size: 16px; margin-top: 24px; }
                 .footer { font-size: 12px; color: #888; margin-top: 40px; text-align: center; }
             </style>
         </head>
         <body>
             <div class="container">
-                <img src="https://ftkwhgb.stripocdn.email/content/guids/CABINET_2663efe83689b9bda1312f85374f56d2/images/10381620386430630.png" alt="BullReckon" width="80" style="display:block;margin:0 auto 24px;">
+                <h1 style="color:#1e40af;text-align:center;font-size:32px;margin-bottom:24px;background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">LunarLens</h1>
                 <h2 style="color:#333;text-align:center;">${subject}</h2>
                 <hr style="border:none;border-top:1px solid #eee;margin:24px 0;">
                 <p style="font-size:16px;color:#333;line-height:1.6;">${description}</p>
@@ -45,14 +41,14 @@ export const passwordEmail = (type: PasswordEmailType) => (
                 </div>
                 <hr style="border:none;border-top:1px solid #eee;margin:32px 0;">
                 <div style="text-align:center;">
-                    <p style="font-size:14px;color:#333;">Need help? <a href="mailto:help@bullReckon.com" style="color:#134F5C;text-decoration:underline;">Contact support</a></p>
+                    <p style="font-size:14px;color:#333;">Need help? <a href="mailto:help@lunarlens.com" style="color:#3b82f6;text-decoration:underline;">Contact support</a></p>
                 </div>
                 <div class="footer">
-                    <p>You are receiving this email because you requested a password change for your BullReckon account.<br>
+                    <p>You are receiving this email because you requested a password change for your LunarLens account.<br>
                     If you did not request this, please ignore this email or contact support.</p>
                 </div>
             </div>
         </body>
         </html>
     `;
-};
+  };
