@@ -154,8 +154,8 @@ export const welcomeEmail = (userName: string) => {
       </div>
 
       <center>
-        <a href="${process.env.CLIENT_URL}/dashboard" class="button">
-          Go to Dashboard →
+        <a href="${process.env.CLIENT_URL}/" class="button">
+          Go to our website →
         </a>
       </center>
 

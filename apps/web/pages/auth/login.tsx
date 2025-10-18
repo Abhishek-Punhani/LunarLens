@@ -31,7 +31,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (authService.isAuthenticated()) {
-      router.push("/dashboard");
+      router.push("/");
     }
   }, [router]);
 
@@ -48,7 +48,7 @@ const LoginPage = () => {
           title: "Welcome back!",
           description: "You have successfully logged in.",
         });
-        router.push("/dashboard");
+        router.push("/");
       } else {
         throw new Error(result.message || "Login failed");
       }

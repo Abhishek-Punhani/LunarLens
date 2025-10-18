@@ -32,7 +32,7 @@ const RegisterPage = () => {
 
   useEffect(() => {
     if (authService.isAuthenticated()) {
-      router.push("/dashboard");
+      router.push("/");
     }
   }, [router]);
 

@@ -66,16 +66,6 @@ export const registerUser = async (
       return res.status(201).json({
         status: "success",
         message: "User registered successfully",
-        user: {
-          _id: user._id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          photo: user.photo,
-          email: user.email,
-          role: user.role,
-          balance: user.balance,
-        },
-        accessToken,
       });
     } catch (err) {
       return next(new ErrorHandling("Error while sending response", 500));

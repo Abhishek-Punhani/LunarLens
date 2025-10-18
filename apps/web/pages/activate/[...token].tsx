@@ -7,9 +7,9 @@ import { useToast } from "@/hooks/use-toast";
 export default function ActivateEmail() {
   const router = useRouter();
   const params = useParams();
-  const token = Array.isArray(params.token)
-    ? params.token.join("")
-    : params.token;
+  const tokenParam = params?.token ?? null;
+  const token =
+    Array.isArray(tokenParam) ? tokenParam.join("") : tokenParam ?? null;
   const [loading, setLoading] = useState(true);
 
   const { toast } = useToast();
@@ -30,18 +30,42 @@ export default function ActivateEmail() {
           } else {
             throw new Error("Verification failed");
           }
-        } catch (error: any) {
-          toast({
-            title: "Error",
-            description:
-              error?.response?.data?.message || "Failed to verify email.",
-            variant: "destructive",
-          });
+        } catch (error: unknown) {
+          if (axios.isAxiosError(error)) {
+            const data = error.response?.data;
+            let msg = "Failed to verify email.";
+            if (typeof data === "object" && data !== null && "message" in data) {
+              const maybeMessage = (data as { message?: unknown }).message;
+              if (typeof maybeMessage === "string") {
+                msg = maybeMessage;
+              }
+            }
+            toast({
+              title: "Error",
+              description: msg,
+              variant: "destructive",
+            });
+          } else if (error instanceof Error) {
+            toast({
+              title: "Error",
+              description: error.message || "Failed to verify email.",
+              variant: "destructive",
+            });
+          } else {
+            toast({
+              title: "Error",
+              description: "Failed to verify email.",
+              variant: "destructive",
+            });
+          }
         } finally {
           setLoading(false);
         }
       }
       verifyToken();
+    } else {
+      // No token present: stop loading and redirect to login
+      setLoading(false);
     }
   }, [token, toast]);
 
