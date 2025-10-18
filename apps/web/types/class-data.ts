@@ -25,6 +25,7 @@ export interface CLASSMetadata {
   v2Lon: number;
   v3Lat: number;
   v3Lon: number;
+  file?: File;
 }
 
 export interface PeakData {
