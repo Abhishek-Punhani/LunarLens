@@ -1,135 +1,258 @@
-# Turborepo starter
+# LunarLens 🌙
 
-This Turborepo starter is maintained by the Turborepo core team.
+A comprehensive web application for analyzing lunar X-ray Fluorescence (XRF) spectroscopy data from the Chandrayaan-2 CLASS (Chandrayaan-2 Large Area Soft X-ray Spectrometer) instrument. LunarLens provides interactive visualization, spectral analysis, and elemental composition mapping of the lunar surface.
 
-## Using this example
+## 🚀 Features
 
-Run the following command:
+### Core Functionality
 
-```sh
-npx create-turbo@latest
-```
+- **FITS File Processing**: Upload and parse CLASS FITS files containing lunar XRF spectroscopy data
+- **Interactive 3D Globe**: Visualize data collection points on a rotating 3D lunar globe with Three.js
+- **Spectral Analysis**: Automated peak detection, element matching, and flux calculation
+- **XRF Analysis**:
+  - Peak detection with Gaussian fitting
+  - Element identification (Mg, Al, Si, Ca)
+  - Elemental ratio calculations (Mg/Si, Al/Si, Ca/Si)
+  - Statistical significance estimation
+- **Combined Spectrum Analysis**: Average multiple observations for enhanced signal-to-noise ratio
+- **Data Visualization**:
+  - Interactive spectrum plots with Recharts
+  - Elemental ratio bar charts
+  - Peak data tables
+- **Authentication**: Secure user authentication with JWT tokens
+- **Responsive Design**: Modern UI with TailwindCSS and dark mode support
 
-## What's inside?
+### Advanced Features
 
-This Turborepo includes the following packages/apps:
+- Spatial overlap detection and averaging
+- KNN-based prediction for missing lunar regions
+- Real-time data processing with FastAPI backend
+- Metadata extraction from FITS headers
+- File management and organization
+
+## 🏗️ Architecture
+
+LunarLens is built as a monorepo using Turborepo with three main applications:
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- **`apps/web`**: Next.js frontend application with React, TypeScript, TailwindCSS, and Three.js
+- **`apps/auth_server`**: Node.js authentication server with Express, JWT, Redis, and PostgreSQL
+- **`apps/calc_server`**: Python FastAPI analysis server with NumPy, SciPy, and scikit-learn
+- **`shared/`**: Shared utilities for authentication, database, and API clients
+- **`middleware/`**: Express middleware for auth, caching, and error handling
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+Each package/app is 100% [TypeScript](https://www.typescriptlang.org/) (except calc_server which is Python).
 
-### Utilities
+## 📋 Prerequisites
 
-This Turborepo has some additional tools already setup for you:
+- Node.js 18+ and pnpm
+- Python 3.12+
+- PostgreSQL (for authentication)
+- Redis (for session management)
+- pyenv (recommended for Python version management)
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+## 🛠️ Installation
 
-### Build
+### 1. Clone the Repository
 
-To build all apps and packages, run the following command:
-
+```bash
+git clone <repository-url>
+cd lunarLens
 ```
-cd my-turborepo
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
+### 2. Install Dependencies
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+Install Node.js dependencies:
+
+```bash
+pnpm install
+```
+
+Set up Python environment for calc_server:
+
+```bash
+cd apps/calc_server
+
+# Create virtual environment
+pyenv virtualenv 3.12.0 myenv
+pyenv local myenv
+
+# Install Python dependencies
+pip install -r requirements.txt
+```
+
+### 3. Environment Configuration
+
+Create `.env` files in the respective application directories:
+
+**apps/web/.env.local:**
+
+```env
+NEXT_PUBLIC_API_URL=http://localhost:3000
+NEXT_PUBLIC_CALC_API_URL=http://localhost:8000
+```
+
+**apps/auth_server/.env:**
+
+```env
+DATABASE_URL=postgresql://user:password@localhost:5432/lunarlens
+REDIS_URL=redis://localhost:6379
+JWT_SECRET=your-secret-key
+```
+
+## 🚀 Running the Application
+
+### Development Mode
+
+Start all services using Turborepo:
+
+```bash
+pnpm dev
+```
+
+Or start services individually:
+
+**Frontend (Next.js):**
+
+```bash
+cd apps/web
+pnpm dev
+# Runs on http://localhost:3000
+```
+
+**Calc Server (FastAPI):**
+
+```bash
+cd apps/calc_server
+pnpm dev
+# or directly:
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+# Runs on http://localhost:8000
+```
+
+**Auth Server (Node.js):**
+
+```bash
+cd apps/auth_server
+pnpm dev
+# Runs on http://localhost:4000
+```
+
+### Production Build
+
+To build all apps and packages:
+
+```bash
+pnpm build
 ```
 
 You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+```bash
+pnpm --filter web build
 ```
 
-### Develop
+## 📁 Data Format
 
-To develop all apps and packages, run the following command:
+LunarLens processes FITS (Flexible Image Transport System) files from the Chandrayaan-2 CLASS instrument. The expected format:
 
-```
-cd my-turborepo
+- **Extension Type**: BINTABLE
+- **Columns**:
+  - `CHANNEL`: Integer\*2 (PHA channel number, 0-2047)
+  - `COUNTS`: Real\*4 (Counts per channel)
+- **Required Headers**:
+  - `SAT_LAT`, `SAT_LON`: Satellite position
+  - `GAIN`: Energy calibration (eV/channel)
+  - `EXPOSURE`: Exposure time
+  - Additional metadata for spatial mapping
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+## 🔬 XRF Analysis Pipeline
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
+1. **Data Extraction**: Parse FITS BinaryTable to extract channel and count arrays
+2. **Energy Calibration**: Convert channel numbers to energy (keV) using gain parameter
+3. **Peak Detection**: Identify peaks using SciPy's `find_peaks` with adaptive thresholding
+4. **Element Matching**: Match detected energy peaks to characteristic X-ray lines:
+   - Mg Kα: 1.25 keV
+   - Al Kα: 1.49 keV
+   - Si Kα: 1.74 keV
+   - Ca Kα: 3.69 keV
+5. **Gaussian Fitting**: Fit Gaussian profiles to peaks for accurate flux calculation
+6. **Ratio Calculation**: Compute elemental ratios normalized to Si
+7. **Spatial Mapping**: Map results to lunar coordinates
+8. **Combined Analysis**: Average overlapping observations and predict missing regions
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+## 🗺️ API Endpoints
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+### Calc Server (http://localhost:8000)
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
+**POST /analyze_spectrum**
 
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+```json
+{
+  "channel": [0, 1, 2, ...],
+  "counts": [10.5, 12.3, 15.7, ...],
+  "gain": 13.5,
+  "sat_lat": -54.1664,
+  "sat_lon": -158.337
+}
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+Response includes peaks, elements, fluxes, ratios, and spatial mapping.
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+**POST /generate_map**
+Generate full lunar map with predictions for unobserved regions.
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
+**POST /clear_data**
+Clear stored spectral data.
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
+## 🎨 Key UI Components
 
-## Useful Links
+- `LunarGlobe.tsx`: Interactive 3D visualization of lunar surface with data markers
+- `SpectralPlot.tsx`: Line chart showing XRF spectrum with identified peaks
+- `RatioChart.tsx`: Bar chart of elemental ratios
+- `PeakTable.tsx`: Tabular display of detected peaks and elements
+- `AnalysisViewer.tsx`: Container component integrating all visualization components
+- `FilesList.tsx`: File management sidebar
+- `MetadataViewer.tsx`: Display FITS header metadata
 
-Learn more about the power of Turborepo:
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License.
+
+## 🙏 Acknowledgments
+
+- Chandrayaan-2 CLASS team for the instrument data
+- ISRO (Indian Space Research Organisation)
+- NASA Astrophysics Data System for FITS format specifications
+
+## 📚 References
+
+- [FITS Format Specification](https://fits.gsfc.nasa.gov/)
+- [Chandrayaan-2 Mission](https://www.isro.gov.in/Chandrayaan2.html)
+
+## 🐛 Known Issues
+
+- Large FITS files (>100MB) may cause memory issues in browser
+- Peak detection threshold may need adjustment for low-count spectra
+- BinaryTable data reading requires FileReader API (browser-only)
+
+## 🔮 Future Enhancements
+
+- [ ] Machine learning models for automated mineral classification
+- [ ] Export results to CSV/JSON
+- [ ] Batch processing of multiple files
+- [ ] Real-time collaboration features
+- [ ] Advanced spatial interpolation methods
+- [ ] Integration with other lunar datasets
+
+---
