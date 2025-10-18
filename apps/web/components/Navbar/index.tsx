@@ -60,7 +60,7 @@ const Navbar = () => {
             <Link href="/profile" className="flex items-center cursor-pointer">
               <Avatar>
                 <AvatarImage src={user.photo} alt={user.name} />
-                <AvatarFallback>{user.name.charAt(0) || "U"}</AvatarFallback>
+                <AvatarFallback>{user.name?.charAt(0) ?? "U"}</AvatarFallback>
               </Avatar>
             </Link>
           ) : (
